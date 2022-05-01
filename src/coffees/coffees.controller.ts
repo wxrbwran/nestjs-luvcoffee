@@ -13,18 +13,19 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 
 @Controller('coffees')
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
   @Get()
-  findAll(@Query() query) {
+  findAll(@Query() query: PaginationQueryDto) {
     const { limit, offset } = query;
     return this.coffeesService.findAll(limit, offset);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: string) {
     return this.coffeesService.findOne(id);
   }
 

@@ -16,23 +16,25 @@ export class CoffeesService {
     private readonly coffeeRepository: Repository<Coffee>,
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
-    private readonly connection: Connection,
-    @Inject('COFFEE_BRAND') cofffeBrands: string[],
+    private readonly connection: Connection /**
+     *
+     *
+     * @Inject('COFFEE_BRAND') cofffeBrands: string[],
     private readonly configService: ConfigService,
     @Inject(coffeesConfig.KEY)
     private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>,
+     */,
   ) {
-    console.log('cofffeBrands', cofffeBrands);
-    const databaseHost = this.configService.get<string>(
-      // 'DATABASE_HOST',
-      'databse.host',
-      'localhost',
-    );
-    console.log('databaseHost', databaseHost);
-
+    // console.log('cofffeBrands', cofffeBrands);
+    // const databaseHost = this.configService.get<string>(
+    //   // 'DATABASE_HOST',
+    //   'databse.host',
+    //   'localhost',
+    // );
+    // console.log('databaseHost', databaseHost);
     // const coffeesConfig = this.configService.get<string>('coffees');
     // console.log('coffeesConfig', coffeesConfig);
-    console.log(coffeesConfiguration.foo);
+    // console.log(coffeesConfiguration.foo);
   }
 
   findAll(limit: number, offset: number) {

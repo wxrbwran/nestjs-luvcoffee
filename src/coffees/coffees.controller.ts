@@ -13,22 +13,37 @@ import {
   Patch,
   Delete,
   Query,
+  UsePipes,
+  ValidationPipe,
+  SetMetadata,
 } from '@nestjs/common';
+import { Public } from 'src/common/decorators/public.decorator';
+import { ParseIntPipe } from 'src/common/pipes/parse-int.pipe';
+import { Protocol } from 'src/common/decorators/protocol.decorator';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('coffees')
+@ApiTags('coffees')
+// @UsePipes(ValidationPipe)
 export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
   @Get()
-  findAll(@Query() query: PaginationQueryDto) {
+  // @SetMetadata('isPublic', true)
+  @Public()
+  // @ApiResponse({ status: 200, description: 'success' })
+  findAll(@Protocol('https') protocol, @Query() query: PaginationQueryDto) {
+    console.log('protocol', protocol);
     const { limit, offset } = query;
     return this.coffeesService.findAll(limit, offset);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  @Public()
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.coffeesService.findOne(id);
   }
 
+  // @UsePipes(ValidationPipe)
   @Post()
   // @HttpCode(HttpStatus.GONE)
   create(@Body() createCoffeeDto: CreateCoffeeDto) {
@@ -36,7 +51,11 @@ export class CoffeesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateCoffeeDto: UpdateCoffeeDto) {
+  @Public()
+  update(
+    @Param('id') id: number,
+    @Body(/**ValidationPipe */) updateCoffeeDto: UpdateCoffeeDto,
+  ) {
     return this.coffeesService.update(id, updateCoffeeDto);
   }
 

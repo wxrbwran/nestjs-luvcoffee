@@ -6,6 +6,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
 import { Coffee } from './entities/coffee.entity';
+import { ConfigService, ConfigType } from '@nestjs/config';
+import coffeesConfig from './config/coffees.config';
 
 @Injectable(/** { scope: Scope.DEFAULT } */)
 export class CoffeesService {
@@ -16,8 +18,21 @@ export class CoffeesService {
     private readonly flavorRepository: Repository<Flavor>,
     private readonly connection: Connection,
     @Inject('COFFEE_BRAND') cofffeBrands: string[],
+    private readonly configService: ConfigService,
+    @Inject(coffeesConfig.KEY)
+    private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>,
   ) {
-    console.log(cofffeBrands);
+    console.log('cofffeBrands', cofffeBrands);
+    const databaseHost = this.configService.get<string>(
+      // 'DATABASE_HOST',
+      'databse.host',
+      'localhost',
+    );
+    console.log('databaseHost', databaseHost);
+
+    // const coffeesConfig = this.configService.get<string>('coffees');
+    // console.log('coffeesConfig', coffeesConfig);
+    console.log(coffeesConfiguration.foo);
   }
 
   findAll(limit: number, offset: number) {
@@ -33,6 +48,7 @@ export class CoffeesService {
       where: { id },
       relations: ['flavors'],
     });
+    // await new Promise((resolve) => setTimeout(resolve, 5000));
     console.log('coffee', coffee);
     if (!coffee) {
       throw new NotFoundException(`Coffee ${id} not found`);

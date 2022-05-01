@@ -5,7 +5,7 @@ import { CoffeesController } from './coffees.controller';
 import { Module, Injectable } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Coffee } from './entities/coffee.entity';
-import { Event } from 'src/events/entities/event.entity';
+import { Event } from '../events/entities/event.entity';
 import { Connection } from 'typeorm';
 import coffeesConfig from './config/coffees.config';
 

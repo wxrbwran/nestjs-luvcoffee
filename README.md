@@ -71,3 +71,16 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+```sh
+10403  nest g co
+10405  nest g s
+10406  nest g module coffees
+10407  nest g class coffees/dto/create-coffee.dto --no-spec
+10408  nest g class coffees/dto/update-coffee.dto --no-spec
+10422  nest g class coffees/entities/flavor.entity --no-spec
+10423  nest g class common/dto/pagination-query.dto --no-spec
+# npx typeorm migration:create -n CoffeeRefactor 失效
+npx typeorm migration:create  ./src/migrations/CoffeeRefactor   
+npx typeorm migration:run
+```

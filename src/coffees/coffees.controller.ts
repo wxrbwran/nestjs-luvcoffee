@@ -20,7 +20,7 @@ import {
 import { Public } from '../common/decorators/public.decorator';
 import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 import { Protocol } from '../common/decorators/protocol.decorator';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('coffees')
 @ApiTags('coffees')
@@ -29,6 +29,7 @@ export class CoffeesController {
   constructor(private readonly coffeesService: CoffeesService) {}
   @Get()
   // @SetMetadata('isPublic', true)
+  @ApiOperation({ summary: 'coffee列表' })
   @Public()
   // @ApiResponse({ status: 200, description: 'success' })
   findAll(@Protocol('https') protocol, @Query() query: PaginationQueryDto) {
@@ -38,6 +39,7 @@ export class CoffeesController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: '根据id获取coffee' })
   @Public()
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.coffeesService.findOne(id);

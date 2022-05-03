@@ -1,3 +1,4 @@
+import { AuthModule } from './../auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { Flavor } from './entities/flavor.entity';
 import { CoffeesService } from './coffees.service';
@@ -21,6 +22,7 @@ import coffeesConfig from './config/coffees.config';
   imports: [
     TypeOrmModule.forFeature([Coffee, Flavor, Event]),
     ConfigModule.forFeature(coffeesConfig),
+    AuthModule,
   ],
   controllers: [CoffeesController],
   // providers: [CoffeesService],

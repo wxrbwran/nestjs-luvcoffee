@@ -1,3 +1,4 @@
+import { GetUser } from './../common/decorators/get-user.decorator';
 import { PaginationQueryDto } from './../common/dto/pagination-query.dto';
 import { UpdateCoffeeDto } from './dto/update-coffee.dto';
 import { CreateCoffeeDto } from './dto/create-coffee.dto';
@@ -16,13 +17,17 @@ import {
   UsePipes,
   ValidationPipe,
   SetMetadata,
+  UseGuards,
 } from '@nestjs/common';
 import { Public } from '../common/decorators/public.decorator';
 import { ParseIntPipe } from '../common/pipes/parse-int.pipe';
 import { Protocol } from '../common/decorators/protocol.decorator';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { User } from 'src/auth/entities/user.entity';
 
 @Controller('coffees')
+@UseGuards(AuthGuard())
 @ApiTags('coffees')
 // @UsePipes(ValidationPipe)
 export class CoffeesController {
@@ -41,7 +46,8 @@ export class CoffeesController {
   @Get(':id')
   @ApiOperation({ summary: '根据id获取coffee' })
   @Public()
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@GetUser() user: User, @Param('id', ParseIntPipe) id: number) {
+    console.log('user', user);
     return this.coffeesService.findOne(id);
   }
 

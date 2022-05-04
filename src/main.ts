@@ -1,3 +1,4 @@
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { TimeoutInterceptor } from './common/interceptors/timeout.interceptor';
 import { WrapReponseInterceptor } from './common/interceptors/wrap-reponse.interceptor';
 import { ValidationPipe } from '@nestjs/common';
@@ -21,6 +22,8 @@ async function bootstrap() {
   // app.useGlobalGuards(new ApiKeyGuard());
   app.useGlobalInterceptors(
     new WrapReponseInterceptor(),
+    // 排除敏感信息，例如用户密码
+    new TransformInterceptor(),
     new TimeoutInterceptor(),
   );
 

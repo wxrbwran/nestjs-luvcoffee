@@ -28,6 +28,7 @@ export class Coffee {
   @JoinTable()
   @ManyToMany(() => Flavor, (flavor) => flavor.coffees, {
     cascade: true, // ['insert]
+    // eager: true,
   })
   flavors: Flavor[];
 }

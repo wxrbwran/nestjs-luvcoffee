@@ -1,5 +1,5 @@
 import { JWTPayload } from './interface/jwt-payload.interface';
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Logger, Post } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -7,11 +7,13 @@ import { User } from './entities/user.entity';
 
 @Controller('auth')
 export class AuthController {
+  private logger = new Logger();
   constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
   @ApiOperation({ summary: '创建用户' })
   signUp(@Body() createUserDto: CreateUserDto): Promise<User> {
+    // this.logger.verbose('log info');
     return this.authService.signUp(createUserDto);
   }
 

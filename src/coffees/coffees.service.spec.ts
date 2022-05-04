@@ -56,6 +56,9 @@ describe('CoffeesService', () => {
       it('返回一个NotFoundException', async () => {
         const coffeeId = 1;
         coffeeRepository.findOne.mockReturnValue(undefined);
+        // expect(service.findOne(coffeeId)).rejects.toThrow(
+        //   `Coffee ${coffeeId} not found`,
+        // );
         try {
           await service.findOne(coffeeId);
         } catch (e) {

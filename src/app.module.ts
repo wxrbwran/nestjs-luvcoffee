@@ -34,7 +34,7 @@ import { AuthModule } from './auth/auth.module';
         password: process.env.DATABASE_PASSWORD,
         database: process.env.DATABASE_NAME,
         autoLoadEntities: true,
-        synchronize: true,
+        synchronize: false,
       }),
     }),
     // TypeOrmModule.forRoot({

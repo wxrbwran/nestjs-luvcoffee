@@ -1,7 +1,5 @@
 import { Module, ValidationPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 // import { DatabaseModule } from './database/database.module';
@@ -53,9 +51,9 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
     // DatabaseModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [
-    AppService,
+    // AppService,
     // {
     //   provide: APP_PIPE,
     //   useClass: ValidationPipe,
